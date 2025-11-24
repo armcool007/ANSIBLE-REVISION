@@ -1,0 +1,8 @@
+- hosts: demo
+  tasks:
+    - name: check number greater then 5
+      command: echo "{{item}}"
+      with_items: [6,8,4,1,9,22,55,3,7,6,0,2]
+      when: item > 5
+      run_once: true
+      delegate_to: node3

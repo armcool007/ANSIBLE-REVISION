@@ -1,0 +1,10 @@
+- hosts: node1
+  become: yes
+  tasks:
+    - name: print
+      command: diff a.txt b.txt
+      ignore_errors: yes
+      register: output
+      failed_when: output.rc != 0
+    - name: check print
+      command: echo "EOF"

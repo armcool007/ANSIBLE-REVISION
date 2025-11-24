@@ -1,0 +1,9 @@
+- hosts: demo
+  become: yes
+  tasks:
+    - name: install git
+      yum: name=git state=present
+      notify: restart node1 machine
+  handlers:
+    - name: restart node1 machine
+      command: init 6

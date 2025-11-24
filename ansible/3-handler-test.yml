@@ -1,0 +1,16 @@
+- hosts: demo
+  become: yes
+  tasks:
+    - name: install httpd
+      yum: name=httpd state=present
+    - name: print something
+      command: echo "checking"
+      notify:
+        - checking-done
+        - start httpd service
+  handlers:
+    - name: start httpd service
+      service: name=httpd state=started
+    - name: checking-done
+      command: echo "done..."
+#agr notify aur handlers ka name same nai hua toh nai chalega

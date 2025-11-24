@@ -1,0 +1,6 @@
+- hosts: demo
+  become: yes
+  tasks:
+    - name: adding user
+      user: name=a state=present
+    - user: name=b state=present

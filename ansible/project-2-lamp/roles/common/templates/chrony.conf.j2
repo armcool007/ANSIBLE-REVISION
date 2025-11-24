@@ -1,0 +1,7 @@
+driftfile: /var/lib/chrony/drift
+restrict: 127.0.0.1
+restrict -6 :: 1
+server 169.254.169.123	
+includefile /etc/chrony/crypto/pw
+key /etc/chrony/keys
+

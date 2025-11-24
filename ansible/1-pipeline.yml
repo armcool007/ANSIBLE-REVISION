@@ -1,0 +1,5 @@
+- hosts: demo
+  become: yes
+  tasks:
+    - name: remove httpd
+      yum: name=httpd state=absent

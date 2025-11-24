@@ -1,0 +1,12 @@
+# mai isme ek particular cheez print karna chahta hun. Through debug.
+- hosts: all
+  become: yes
+  tasks:
+    - name: print
+      command: echo "hello-how-are-you"
+      run_once: true
+      delegate_to: master
+      register: particular
+    - debug: var=particular.stdout
+      run_once: true
+      delegate_to: node2

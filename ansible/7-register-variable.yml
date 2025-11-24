@@ -1,0 +1,7 @@
+- hosts: demo
+  become: yes
+  tasks:
+    - name: print
+      command: echo "hello"
+      register: save
+    - debug: var=save.stdout

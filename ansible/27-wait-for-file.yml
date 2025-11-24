@@ -1,0 +1,10 @@
+- hosts: node3
+  become: yes
+  tasks:
+    - name: print
+      wait_for:
+        path: /tmp/names.txt
+        delay: 5
+        timeout: 20
+    - name: eof
+      command: echo "end of file"

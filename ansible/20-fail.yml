@@ -1,0 +1,15 @@
+- hosts: node1
+  become: yes
+  tasks:
+    - name: fail
+      command: zecho "hello"
+      register: chk
+      ignore_errors: yes
+#      register: a
+#    - debug: var=a
+    - name: fail task when command error o/p prints failed
+      fail:
+        msg: "task failed"
+      when: chk.failed==true #ye a me check karega toh mil jayega
+    - name: print
+      command: echo "EOF"

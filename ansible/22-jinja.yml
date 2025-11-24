@@ -1,0 +1,9 @@
+- hosts: node3
+  become: yes
+  tasks:
+    - name: copying
+      template:
+        src: /tmp/apple.j2
+        dest: /tmp/apple.txt
+
+    #copy nai use karna hai "template use karna hai"

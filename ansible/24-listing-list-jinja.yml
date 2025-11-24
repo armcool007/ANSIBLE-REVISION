@@ -1,0 +1,12 @@
+- hosts: node3
+  become: yes
+  vars:
+    myval: ["chandu","ke","chaha","ne"]
+  tasks:
+    - name: printing names
+      template:
+        src: 24.1-list-jinja.j2 
+        dest: /tmp/names.txt
+
+        #24.1-list-jinja.j2 ye file issi ki hai
+

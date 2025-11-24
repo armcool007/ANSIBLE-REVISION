@@ -1,0 +1,20 @@
+- hosts: demo
+  become: yes
+  tasks:
+    - name: sleep10
+      command: sleep 10
+      async: 15
+      poll: 1
+    - name: print
+      command: echo "done"
+      register: out
+    - debug: var=out.stdout
+
+
+
+#async: X ka matlab hai:
+#"Is task ko complete hone ke liye maximum X seconds ka time do. Agar utne time me khatam nahi hota, toh fail kardo." 
+#poll: Y ka matlab hai:
+#"Har Y seconds ke baad remote machine pe check karo ki kaam khatam hua ya nahi — jab tak async ka time khatam na ho jaye." 
+
+

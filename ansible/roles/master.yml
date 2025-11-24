@@ -1,0 +1,13 @@
+- hosts: node3 
+  become: yes
+  roles:
+    - dev
+#Ansible roles ke liye strict naming convention hoti hai:
+#roles/
+#└── dev/
+#    ├── tasks/
+#    │   └── main.yml          ✅ must be "tasks", not "task"
+#    ├── handlers/
+#    │   └── main.yml          ✅ must be "handlers", not "handler"
+#    └── vars/
+#        └── main.yml          ✅ variables usually in "main.yml", not custom name

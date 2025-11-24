@@ -1,0 +1,11 @@
+- hosts: node1
+  become: yes
+  tasks:
+    - name: port-checking
+      wait_for:
+        port: 80
+        state: started
+        timeout: 300
+    - name: eof
+      command: echo "end of file"
+

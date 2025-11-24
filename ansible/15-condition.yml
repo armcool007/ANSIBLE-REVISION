@@ -1,0 +1,11 @@
+- hosts: demo
+  become: yes
+  vars:
+    - val: present
+  tasks:
+    - name: install tree 
+      apt: name=tree state='{{val}}'
+      when: ansible_os_family=="Debian"
+    - name: install tree
+      yum: name=tree state='{{val}}'
+      when: ansible_os_family=="RedHat"

@@ -1,0 +1,12 @@
+- name: install mariadb
+  apt: name={{item}} state=present
+  loop:
+    - mariadb-client
+    - mariadb-server
+  ignore_errors: yes
+- name: move the file
+  template:
+    src: my.cnf.j2
+    dest: /etc/my.cnf
+- name: start the service
+  service: name=mariadb state=started enabled=yes

@@ -1,0 +1,15 @@
+- hosts: demo
+  become: yes
+  vars:
+    - myvars: nginx
+  tasks:
+    - name: installing nginx
+      yum: name="{{myvars}}" state=present
+    - name: start nginx
+      service: name="{{myvars}}" state=started
+    - name: printing
+      command: echo "successfully installed and started {{myvars}}"
+
+#ansible-playbook --extra-vars "myvars=httpd" 4-variable.yml -v
+#if nginx phle se installed hai aur aap uper wala command run kr rahe ho then port conflict aa skta hai.
+#toh to isntalled it you must first uninstalled the nginx first

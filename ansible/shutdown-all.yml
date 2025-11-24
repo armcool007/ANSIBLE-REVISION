@@ -1,0 +1,8 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: shutting down all the machines
+      command: shutdown now
+      ignore_errors: yes
+      async: 1
+      poll: 0

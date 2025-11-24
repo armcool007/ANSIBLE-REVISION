@@ -1,0 +1,9 @@
+- hosts: node3
+  become: yes
+  tasks:
+    - name: printing loop from jinja
+      template:
+        src: jinja.j2
+        dest: /tmp/loop.txt
+
+  #ansible-playbook 23-jinja-loop.yml --extra-var "myval=karma"

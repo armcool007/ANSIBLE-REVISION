@@ -1,0 +1,9 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: add the users
+      user: name='{{item.name}}' group='{{item.groups}}' state=present
+      with_items:
+        - {name: alpha, groups: root}
+        - {name: beta, groups: karma}
+        - {name: gamma, groups: apache}

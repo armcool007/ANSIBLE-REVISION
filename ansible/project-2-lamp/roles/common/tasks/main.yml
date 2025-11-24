@@ -1,0 +1,9 @@
+- name: install chrony
+  apt: name=chrony state=present
+- name: start service
+  service: name=chronyd state=started
+- name: configure chorny
+  template:
+    src: chrony.conf.j2
+    dest: /etc/chrony.conf
+  notify: restart chrony

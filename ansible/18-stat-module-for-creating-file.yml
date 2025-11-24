@@ -1,0 +1,22 @@
+- hosts: node3
+  become: yes
+  tasks:
+    - name: checking a file status
+      stat: path=/tmp/apple.txt
+      register: check
+#   - debug: var=check
+    - debug: var=check.stat.exists
+    - name: creating a file
+      command: touch /tmp/apple.txt
+#     when: check.stat.exists==false      #this is also working
+      when: not check.stat.exists
+
+        #Agar file EXIST KARTI HAI →
+          #check.stat.exists = true
+          #not check.stat.exists = false
+           # → Task skip hoga
+        #Agar file EXIST NAHI KARTI →
+          #check.stat.exists = false
+          #not check.stat.exists = true
+           # → Task chalega
+

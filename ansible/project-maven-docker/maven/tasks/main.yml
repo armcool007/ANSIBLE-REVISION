@@ -1,0 +1,69 @@
+- name: refresh the system
+  block:
+    - name: 1-ubuntu-machine
+      apt: update_cache=yes
+      when: ansible_os_family == "Debian" 
+    - name: 1-redhat-machine
+      dnf: update_cache=yes
+      when: ansible_os_family == "RedHat"
+
+- name: download git and java
+  block:
+    - name: 2-ubuntu-machine
+      apt: name='{{item}}' state=present
+      with_items:
+        - git
+        - openjdk-17-jdk
+      when: ansible_os_family == "Debian"
+    
+    - name: 2-redhat-machine
+      dnf: name='{{item}}' state=present
+      with_items:
+        - git
+        - java-17-amazon-corretto #for amazon-linux
+      when: ansible_os_family == "RedHat"
+
+- name: "3-check opt/downloads folder is available or not"
+  file:
+    path: /opt/downloads
+    state: directory
+    mode: 0755
+
+- name: 4-path-conformation
+  stat:
+    path: '{{maven_parent_directory}}/apache-maven-{{maven_version}}'
+  register: check
+#- debug: var=check
+
+- name: 5-download the maven 
+  get_url:
+    url: '{{maven_url}}'
+    dest: '{{maven_parent_directory}}'
+  when: check.stat.exists != True
+
+- name: 6-unarchieving the maven
+  unarchive:
+    src: '{{maven_parent_directory}}/{{maven_file_name}}'
+    dest: '{{maven_parent_directory}}'
+    remote_src: yes
+  when: check.stat.exists != True
+
+- name: 7-adding maven to /etc/profile files
+  lineinfile:
+    dest: /etc/profile.d/maven.sh
+    line: '{{item.line}}'
+    create: yes
+    state: present
+  loop:
+    - {line: 'export maven_home={{maven_parent_directory}}/apache-maven-{{maven_version}}'}
+    - {line: 'export PATH=$PATH:$maven_home/bin'}
+#  when: check.stat.exists == True
+    #file exist krta hai toh "!=" ye nai dena hai toh "maven.sh" create nai hoga
+
+- name: 8-removing the tar file
+  file:
+    path: '{{maven_parent_directory}}/{{maven_file_name}}'
+    state: absent
+  
+
+

@@ -1,0 +1,31 @@
+✅ Ansible Roles: Rules & Regulations (Important Points for Notes)
+1. Fixed Directory Structure
+Roles me har folder ka naam predefined hota hai.
+Ansible sirf inhi folders ko recognize karta hai:
+	roles/
+	└── <role_name>/
+	    ├── tasks/          → Tasks (main.yml mandatory)
+	    ├── handlers/       → Handlers (main.yml)
+	    ├── vars/           → Variables (main.yml)
+	    ├── defaults/       → Default variables (main.yml)
+	    ├── files/          → Static files (for copy module)
+	    ├── templates/      → Jinja2 templates (.j2)
+	    └── meta/           → Role metadata (dependencies, etc.)
+
+2. main.yml is Mandatory
+Har folder (tasks, handlers, vars, etc.) ke andar main.yml hona chahiye.
+Agar main.yml nahi hoga, Ansible us folder ko ignore kar dega.
+3. No hosts in Role Files
+Role ke tasks/main.yml me hosts: nahi likh sakte.
+hosts sirf playbook me hota hai.
+	❌ Galat:
+		# tasks/main.yml
+		- hosts: node1   # ← NOT ALLOWED in role
+		  tasks:
+    			- ...
+	✅ Sahi:
+		# tasks/main.yml
+		- name: install httpd
+		  yum:
+		    name: httpd
+		    state: present

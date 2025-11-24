@@ -1,0 +1,12 @@
+- hosts: demo
+  become: yes
+  vars_files:
+    - /tmp/var.txt
+#    - var.yml
+  tasks:
+    - name: install nginx
+      yum: name='{{myname}}' state=present
+    - name: start service
+      service: name='{{myname}}' state=started 
+#var.txt bhi le skte hain but we have to give the variable name as --> myvars: nginx
+#jaise yml file me dete hai aur .yml file me toh aisehe dete hain.

@@ -1,0 +1,2 @@
+- name: check
+  command: echo "'{{val}}' checking done"

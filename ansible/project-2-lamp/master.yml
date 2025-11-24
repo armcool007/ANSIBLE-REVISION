@@ -1,0 +1,16 @@
+- name: for common
+  hosts: ubuntu
+  become: yes
+  roles:
+    - common
+- name: for web
+  hosts: ubuntu
+  become: yes
+  roles:
+    - web
+- name: for db
+  hosts: ubuntu
+  become: yes
+  roles:
+    - db
+

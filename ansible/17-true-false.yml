@@ -1,0 +1,10 @@
+- hosts: node3
+  become: yes
+  vars:
+    - val: false #false|true
+  tasks:
+    - name: check
+      command: echo "true" #"false"
+      when: not val           # not val (if taken false) called "negation"
+      register: print
+    - debug: var=print.stdout

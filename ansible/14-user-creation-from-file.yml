@@ -1,0 +1,6 @@
+- hosts: demo
+  become: yes
+  tasks:
+    - name: adding users
+      user: name='{{item}}' state=present #absent
+      loop: "{{lookup('file','users.txt').splitlines()}}"

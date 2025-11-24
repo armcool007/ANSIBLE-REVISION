@@ -1,0 +1,11 @@
+- hosts: all       #all|local|demo
+  tasks:
+    - name: print
+      command: echo "{{myval}}"
+
+
+# for using global variable aapko /etc/ansible me "host_vars" and "group_vars" se he folder create krna hoga.
+# agr kisi aur name se kiya toh nai chalega aur group_vars folder me jo grp rakha hai hosts file me vohi rakhna name of the file and then create the variables.
+# same in the case of hosts_vars same name rakhna jo "alias" name rakha tha in hosts file ussi se file create krna.
+# for runtime variable use:
+# $ansible-playbook --extra-vars "myval=karma" 6-global-variable.yml -v

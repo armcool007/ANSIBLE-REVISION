@@ -1,0 +1,26 @@
+- name: refresh
+  block:
+    - name: 1-ubuntu
+      apt: update_cache=yes
+      when: ansible_os_family == "Debian"
+    - name: 1-redhat
+      dnf: update_cache=yes
+      when: ansible_os_family == "RedHat"
+- name: install docker
+  block:
+    - name: 2-ubuntu
+      apt: name=docker.io state=present
+      when: ansible_os_family == "Debian"
+    - name: 2-redhat
+      dnf: name=docker state=present
+      when: ansible_os_family == "RedHat"
+
+- name: 3-start docker service
+  service: name=docker state=started
+
+- name: 4-adding user to docker group
+  user:
+    name: '{{ansible_user}}'
+    groups: docker
+#for adding current user to docker group, we cant add with $USER.
+

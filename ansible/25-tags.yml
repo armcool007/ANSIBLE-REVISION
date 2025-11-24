@@ -1,0 +1,21 @@
+- hosts: node3
+  become: yes
+  tasks:
+    - name: first_name
+      command: echo "john"
+      tags:
+        - group1
+        - john
+    - name: 2nd_name
+      command: echo "johnny"
+      tags:
+        - group2
+        - johnny
+    - name: 3rd_name
+      command: echo "jarnardhan"
+      tags:
+        - group1
+        - jarnardhan
+#ansible-playbook --skip-tags "group1" 25-tags.yml -v
+#ansible-playbook --tags "jarnardhan" 25-tags.yml -v
+

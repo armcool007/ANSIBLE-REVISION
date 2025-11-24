@@ -1,0 +1,9 @@
+- hosts: demo
+  become: yes
+  tasks:
+    - name: print
+      command: zecho "hi"
+      ignore_errors: yes
+    - name: eof
+      command: echo "end of file"
+      

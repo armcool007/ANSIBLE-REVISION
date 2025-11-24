@@ -1,0 +1,6 @@
+- name: printing name
+  command: echo "my name is '{{val}}'"
+  notify: check
+- name: eof
+  command: echo "eof"
+#❌ hosts: node3 → role ke andar allowed nahi 
