@@ -1,0 +1,20 @@
+#cat usersfile.yml
+names:
+  - rahul
+  - amar
+  - akbar
+  - antony
+  - russy
+
+#cat creating_users_repeat.yml
+- hosts: node2
+  become: yes
+  vars_files:
+    - usersfile.yml
+  tasks:
+    - name: "making users"
+      user:
+         name: '{{item}}'
+         state: present
+           #      loop: '{{names}}'      #used for newer version
+      with_items: '{{names}}'
