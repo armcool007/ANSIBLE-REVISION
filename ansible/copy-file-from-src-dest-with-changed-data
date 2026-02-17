@@ -1,0 +1,14 @@
+#copy-file-from-src-dest-with-changed-data.yml
+- hosts: node2
+  become: yes
+  vars:
+    - user: "justin"
+  tasks:
+    - name: "testing"
+      template:
+        src: /tmp/file
+        dest: /tmp/copiedfile
+
+
+#file.yml | or only file
+this is annsible test is done by {{user}}
