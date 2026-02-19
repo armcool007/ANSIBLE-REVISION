@@ -1,0 +1,2 @@
+#Without giving inventory file
+ansible-playbook main.yml -i 172.31.38.181, -u=ubuntu --key-file=/etc/ansible/imp.pem
