@@ -1,0 +1,21 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: "creating groups"
+      group:
+        name: "{{item}}"
+        state: present
+      with_items:
+        - kasaka
+        - naomi
+        - viraal
+        - karaki
+    - name: creating users
+      user: name="{{item.name}}" group="{{item.group}}"
+      with_items:
+        - {name: kasvi , group: kasaka}
+        - {name: vairani , group: naomi}
+        - {name: kishant , group: karaki}
+        - {name: naru , group: viraal}
+        - {name: rajshree , group: naomi}
+
