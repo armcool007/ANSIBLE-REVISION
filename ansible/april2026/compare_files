@@ -1,0 +1,16 @@
+- hosts: ubuntu
+  become: yes
+  tasks:
+    - name: print comapare
+      command: diff /home/ubuntu/file1 /home/ubuntu/file3
+      register: out
+      ignore_errors: yes
+    - debug: var=out
+    - name: "when FAIL"
+      debug:
+        msg: "same nai hai content of the files"
+      when: out.rc>0
+    - name: "when PASS"
+      debug:
+        msg: "same hai content of the files"
+      when: out.rc==0
