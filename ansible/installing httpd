@@ -1,0 +1,16 @@
+1) Condition on OS family
+- name: condition wala
+  hosts: rhel
+  become: yes
+  vars:
+    install_httpd: true   # or false
+  tasks:
+    - name: installing httpd if it is not already installed
+      package:
+        name: httpd
+        state: present
+      when:
+        - install_httpd == true
+        - ansible_facts['os_family'] == "RedHat"
+OR with one line:
+  when: ansible_facts['os_family'] == "RedHat" and ansible_facts['distribution_major_version'] == "9"
