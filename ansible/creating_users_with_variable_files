@@ -18,6 +18,9 @@ names:
          state: present
            #      loop: '{{names}}'      #used for newer version
       with_items: '{{names}}'
+#if we are giving like this:
+with_items/loop:
+      - '{{names}}'      #toh ye error dega aur nai chalega.
 
 
 
