@@ -1,0 +1,34 @@
+# vi jinjaTemplate.yml
+
+- name: jinjatemplate for copying files from src to dest with multiple names using jinja
+  hosts: rhel
+  become: yes
+  vars_files:
+    - 19usernamelist.yml
+  tasks:
+    - name: start
+      template:
+        src: /root/ansible/19jinjafile.j2
+        dest: /tmp/differentnamesfile
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------
+
+# vi jinjafile.j2
+
+{%for i in username%}
+hello {{i}},
+      -----
+how are you. Tell me something about yourself.
+Thanku {{i}}
+
+{%endfor%}
+
+#-----------------------------------------------------------------------------------------------------------------------------------------------
+
+# vi usernamelist.yml
+username:
+  - karma
+  - chakma
+  - nakma
+  - zoro
+  - horror
