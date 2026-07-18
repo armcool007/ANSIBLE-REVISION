@@ -1,0 +1,56 @@
+- name: installing tomcat
+  hosts: rhel
+  become: yes
+  tasks:
+    - name: checking if folder is present of tomcat
+      file:
+        path: /opt/apache
+        state: directory
+        mode: 755
+
+    - name: installing tomcat
+      get_url:
+        url:  https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.120/bin/apache-tomcat-9.0.120.tar.gz
+        dest: /opt/apache
+    - name: untaring the tomcat
+      unarchive:
+        src: /opt/apache/apache-tomcat-9.0.120.tar.gz
+        dest: /opt/apache/
+    - name: "now deleting the .gz file which we downloaded"
+      file:
+        path: /opt/apache/apache-tomcat-9.0.120.tar.gz
+        state: absent
+    - name: "now changing the content of the file tomcat-users.xml"
+      copy:
+        src: /home/ec2-user/tomcat-users.xml
+        dest: /opt/apache/apache-tomcat-9.0.120/conf/tomcat-users.xml
+    - name: "now changing the content of context.xml"
+      copy:
+        src: /home/ec2-user/context.xml
+        dest: /opt/apache/apache-tomcat-9.0.120/webapps/manager/META-INF/context.xml
+    - name: "creating systemd file"
+      copy:
+        dest: /etc/systemd/system/tomcat.service
+        content: |
+          [Unit]
+          Description=Apache tomcat
+          After=network.target
+          [Service]
+          User=root               #nai bhi likhenge to bydefault root he execute karega
+          Group=root
+          Type=forking
+          Environment="JAVA_HOME=/opt/lib/jvm/jre"
+          Environment="CATALINA_HOME=/opt/tomcat"
+          ExecStart=/opt/apache/apache-tomcat-9.0.120/bin/startup.sh
+          ExecStop=/opt/apache/apache-tomcat-9.0.120/bin/shutdown.sh
+          Restart=on-failure
+
+          [Install]
+          WantedBy=multi-user.target
+    - name: "reloading systemd"
+      systemd:
+        daemon_reload: yes
+    - name: "starting tomcat service"
+      service:
+        name: tomcat.service
+        state: started
